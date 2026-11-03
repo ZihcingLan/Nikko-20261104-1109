@@ -123,7 +123,10 @@
         a.map-link {
             color: #1a0dab;
             text-decoration: underline;
-            font-weight: 500;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 4px;
         }
         .add-card-box {
             background: #f5efe6;
@@ -264,6 +267,7 @@
             items: [
                 { time: "✈️ 航班", title: "華航 CI0104（12:35 TPE ➔ 16:35 NRT）", desc: "抵達機場後搭乘京成 Access 特快或 Skyliner 直達淺草站。", link: "https://keisei.ekitan.com/naritaacs-i/timetable" },
                 { time: "🛂 申報", title: "Visit Japan Web 入境申報", desc: "請預先完成 VJW 填寫以加速通關。", link: "https://www.vjw.digital.go.jp/main/#/vjwpic026", isVJW: true },
+                { time: "🍁 紅葉", title: "日本全國紅葉見頃預測 (weathernews)", desc: "即時查詢日光與東京賞楓情報與落葉進度。", link: "https://weathernews.jp/koyo/", isMaple: true },
                 { time: "🏨 住宿", title: "東京淺草筑波快速船舶飯店", desc: "Check-in 放行李，稍作休息。", link: "https://maps.google.com/?q=Vessel+Inn+Asakusa+Tsukuba+Express" },
                 { time: "🛒 採購", title: "UNIQLO 淺草 ROX 店", desc: "採購換季與夏季衣服（營業至 21:00）。", link: "https://maps.google.com/?q=UNIQLO+Asakusa+ROX" }
             ],
@@ -318,13 +322,13 @@
     };
 
     function getDaysData() {
-        let stored = localStorage.getItem("nikko_days_plan_v7");
+        let stored = localStorage.getItem("nikko_days_plan_v9");
         if (stored) { try { return JSON.parse(stored); } catch(e) {} }
         return initialDaysData;
     }
 
     function saveDaysData(data) {
-        localStorage.setItem("nikko_days_plan_v7", JSON.stringify(data));
+        localStorage.setItem("nikko_days_plan_v9", JSON.stringify(data));
     }
 
     function renderDays() {
@@ -338,7 +342,10 @@
                 <h2>${dayObj.title}</h2>`;
 
             dayObj.items.forEach((item, idx) => {
-                let linkText = item.isVJW ? '🛂 Visit Japan Web 入境申報' : `🔗 ${item.title}`;
+                let linkText = '🔗 地圖';
+                if (item.isVJW) linkText = '🛂 申報';
+                if (item.isMaple) linkText = '🍁 紅葉情報';
+
                 html += `
                     <div class="card" style="background:#fffaf3; margin-top:10px;">
                         <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
@@ -375,7 +382,7 @@
                     <input type="text" id="input_link_${dayKey}" placeholder="Google Maps 或購票網址（選填）">
                     <button class="add-btn" onclick="addCardItem('${dayKey}')">新增行程</button>
                 </div>
-            </div>`;
+            `;
 
             container.innerHTML = html;
         }
@@ -434,7 +441,7 @@
     ];
 
     function getShoppingItems() {
-        let stored = localStorage.getItem("nikko_shopping_list_v7");
+        let stored = localStorage.getItem("nikko_shopping_list_v9");
         if (stored) { try { return JSON.parse(stored); } catch(e) {} }
         return defaultShopping;
     }
@@ -462,7 +469,7 @@
         if(!val) return;
         let items = getShoppingItems();
         items.push({ text: val, completed: false });
-        localStorage.setItem("nikko_shopping_list_v7", JSON.stringify(items));
+        localStorage.setItem("nikko_shopping_list_v9", JSON.stringify(items));
         input.value = "";
         renderChecklist();
     }
@@ -470,7 +477,7 @@
     function toggleShopping(index) {
         let items = getShoppingItems();
         items[index].completed = !items[index].completed;
-        localStorage.setItem("nikko_shopping_list_v7", JSON.stringify(items));
+        localStorage.setItem("nikko_shopping_list_v9", JSON.stringify(items));
         renderChecklist();
     }
 
@@ -484,7 +491,7 @@
             alert("請先勾選想要刪除的採購項目！");
             return;
         }
-        localStorage.setItem("nikko_shopping_list_v7", JSON.stringify(newItems));
+        localStorage.setItem("nikko_shopping_list_v9", JSON.stringify(newItems));
         renderChecklist();
     }
 
