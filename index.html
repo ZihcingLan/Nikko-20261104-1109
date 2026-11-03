@@ -1,13 +1,3 @@
-了解！從截圖中看到了，因為 JavaScript 裡統一渲染了「點此開啟連結/申報網址」，導致一般景點也顯示了「申報網址」。
-
-我已經修正了邏輯：
-
-1. **Visit Japan Web 入境申報** 的按鈕會明確顯示為：`🛂 點此進行 Visit Japan Web 申報`
-2. **其他所有景點/交通** 的按鈕會自動抓取該項目的名稱，顯示為：`🔗 點此開啟「景點/行程名稱」連結`（例如：`🔗 點此開啟「中禪寺湖畔散步 & 搭乘遊覽船」連結`）
-
-請直接將下方整份**完整無縮寫**的程式碼複製，覆蓋貼到你的 `index.html` 即可：
-
-```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -216,7 +206,7 @@
 
 <header>
     <h1>🍁 2026 媽媽日光與東京自由彈性賞楓行</h1>
-    <p>11/04 (三) ~ 11/09 (一) ｜ 📁 <a href="https://drive.google.com/drive/folders/1MRhGdwO4dzu2HmZj0hRmPUjB2HcjdRuN" target="_blank">點此開啟 Google 雲端共用資料夾</a></p>
+    <p>11/04 (三) ~ 11/09 (一) ｜ 📁 <a href="https://drive.google.com/drive/folders/1MRhGdwO4dzu2HmZj0hRmPUjB2HcjdRuN" target="_blank">Google 雲端共用資料夾</a></p>
 </header>
 
 <div class="tabs">
@@ -328,13 +318,13 @@
     };
 
     function getDaysData() {
-        let stored = localStorage.getItem("nikko_days_plan_v6");
+        let stored = localStorage.getItem("nikko_days_plan_v7");
         if (stored) { try { return JSON.parse(stored); } catch(e) {} }
         return initialDaysData;
     }
 
     function saveDaysData(data) {
-        localStorage.setItem("nikko_days_plan_v6", JSON.stringify(data));
+        localStorage.setItem("nikko_days_plan_v7", JSON.stringify(data));
     }
 
     function renderDays() {
@@ -348,7 +338,7 @@
                 <h2>${dayObj.title}</h2>`;
 
             dayObj.items.forEach((item, idx) => {
-                let linkText = item.isVJW ? '🛂 點此進行 Visit Japan Web 申報' : `🔗 點此開啟「${item.title}」連結`;
+                let linkText = item.isVJW ? '🛂 Visit Japan Web 入境申報' : `🔗 ${item.title}`;
                 html += `
                     <div class="card" style="background:#fffaf3; margin-top:10px;">
                         <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
@@ -444,7 +434,7 @@
     ];
 
     function getShoppingItems() {
-        let stored = localStorage.getItem("nikko_shopping_list_v6");
+        let stored = localStorage.getItem("nikko_shopping_list_v7");
         if (stored) { try { return JSON.parse(stored); } catch(e) {} }
         return defaultShopping;
     }
@@ -472,7 +462,7 @@
         if(!val) return;
         let items = getShoppingItems();
         items.push({ text: val, completed: false });
-        localStorage.setItem("nikko_shopping_list_v6", JSON.stringify(items));
+        localStorage.setItem("nikko_shopping_list_v7", JSON.stringify(items));
         input.value = "";
         renderChecklist();
     }
@@ -480,7 +470,7 @@
     function toggleShopping(index) {
         let items = getShoppingItems();
         items[index].completed = !items[index].completed;
-        localStorage.setItem("nikko_shopping_list_v6", JSON.stringify(items));
+        localStorage.setItem("nikko_shopping_list_v7", JSON.stringify(items));
         renderChecklist();
     }
 
@@ -494,7 +484,7 @@
             alert("請先勾選想要刪除的採購項目！");
             return;
         }
-        localStorage.setItem("nikko_shopping_list_v6", JSON.stringify(newItems));
+        localStorage.setItem("nikko_shopping_list_v7", JSON.stringify(newItems));
         renderChecklist();
     }
 
