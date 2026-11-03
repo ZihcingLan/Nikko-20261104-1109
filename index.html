@@ -41,6 +41,7 @@
             color: #ffeb3b;
             text-decoration: underline;
             font-weight: bold;
+            margin: 0 5px;
         }
         .tabs {
             display: flex;
@@ -209,7 +210,11 @@
 
 <header>
     <h1>🍁 2026 媽媽日光與東京自由彈性賞楓行</h1>
-    <p>11/04 (三) ~ 11/09 (一) ｜ 📁 <a href="https://drive.google.com/drive/folders/1MRhGdwO4dzu2HmZj0hRmPUjB2HcjdRuN" target="_blank">Google 雲端共用資料夾</a></p>
+    <p>
+        11/04 (三) ~ 11/09 (一) ｜ 
+        📁 <a href="https://drive.google.com/drive/folders/1MRhGdwO4dzu2HmZj0hRmPUjB2HcjdRuN" target="_blank">Google 雲端共用資料夾</a> ｜ 
+        🍁 <a href="https://www.nikko-kankou.org/flowering/autumn-leaves" target="_blank">日光官方紅葉情報</a>
+    </p>
 </header>
 
 <div class="tabs">
@@ -267,7 +272,6 @@
             items: [
                 { time: "✈️ 航班", title: "華航 CI0104（12:35 TPE ➔ 16:35 NRT）", desc: "抵達機場後搭乘京成 Access 特快或 Skyliner 直達淺草站。", link: "https://keisei.ekitan.com/naritaacs-i/timetable" },
                 { time: "🛂 申報", title: "Visit Japan Web 入境申報", desc: "請預先完成 VJW 填寫以加速通關。", link: "https://www.vjw.digital.go.jp/main/#/vjwpic026", isVJW: true },
-                { time: "🍁 紅葉", title: "日本全國紅葉見頃預測 (weathernews)", desc: "即時查詢日光與東京賞楓情報與落葉進度。", link: "https://weathernews.jp/koyo/", isMaple: true },
                 { time: "🏨 住宿", title: "東京淺草筑波快速船舶飯店", desc: "Check-in 放行李，稍作休息。", link: "https://maps.google.com/?q=Vessel+Inn+Asakusa+Tsukuba+Express" },
                 { time: "🛒 採購", title: "UNIQLO 淺草 ROX 店", desc: "採購換季與夏季衣服（營業至 21:00）。", link: "https://maps.google.com/?q=UNIQLO+Asakusa+ROX" }
             ],
@@ -297,7 +301,7 @@
             items: [
                 { time: "09:00", title: "日光東照宮 & 二荒山神社", desc: "參觀三不猴、眠貓與陽明門逆柱。建議先買免排隊電子票。", link: "https://www.klook.com/zh-TW/activity/144422-nikko-toshogu-shrine-admission-ticket/" },
                 { time: "12:00", title: "老街午餐（炸湯波饅頭 さかえや）", desc: "品嚐在地名物豆皮點心。", link: "https://maps.google.com/?q=Sakaeya+Nikko" },
-                { time: "17:30", title: "🌙 重頭戲：日光山輪王寺 逍遙園夜間點燈", desc: "參觀秋季限定夜楓點燈 (Light Up)，欣賞夜間朱紅社殿美景。", link: "https://maps.google.com/?q=Rinnoji+Shoyoen" }
+                { time: "17:30", title: "🌙 重頭戲：日光山輪王寺 逍遙園夜間點燈", desc: "參觀秋季限定夜楓點燈 (Light Up)", link: "https://maps.google.com/?q=Rinnoji+Shoyoen" }
             ],
             funFact: "東照宮陽明門的「逆柱」故意將圖案刻倒，象徵「未完成」以避免「滿極則虧」的衰敗意涵。"
         },
@@ -322,13 +326,13 @@
     };
 
     function getDaysData() {
-        let stored = localStorage.getItem("nikko_days_plan_v9");
+        let stored = localStorage.getItem("nikko_days_plan_v10");
         if (stored) { try { return JSON.parse(stored); } catch(e) {} }
         return initialDaysData;
     }
 
     function saveDaysData(data) {
-        localStorage.setItem("nikko_days_plan_v9", JSON.stringify(data));
+        localStorage.setItem("nikko_days_plan_v10", JSON.stringify(data));
     }
 
     function renderDays() {
@@ -342,10 +346,7 @@
                 <h2>${dayObj.title}</h2>`;
 
             dayObj.items.forEach((item, idx) => {
-                let linkText = '🔗 地圖';
-                if (item.isVJW) linkText = '🛂 申報';
-                if (item.isMaple) linkText = '🍁 紅葉情報';
-
+                let linkText = item.isVJW ? '🛂 申報' : '🔗 地圖';
                 html += `
                     <div class="card" style="background:#fffaf3; margin-top:10px;">
                         <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
@@ -441,7 +442,7 @@
     ];
 
     function getShoppingItems() {
-        let stored = localStorage.getItem("nikko_shopping_list_v9");
+        let stored = localStorage.getItem("nikko_shopping_list_v10");
         if (stored) { try { return JSON.parse(stored); } catch(e) {} }
         return defaultShopping;
     }
@@ -469,7 +470,7 @@
         if(!val) return;
         let items = getShoppingItems();
         items.push({ text: val, completed: false });
-        localStorage.setItem("nikko_shopping_list_v9", JSON.stringify(items));
+        localStorage.setItem("nikko_shopping_list_v10", JSON.stringify(items));
         input.value = "";
         renderChecklist();
     }
@@ -477,7 +478,7 @@
     function toggleShopping(index) {
         let items = getShoppingItems();
         items[index].completed = !items[index].completed;
-        localStorage.setItem("nikko_shopping_list_v9", JSON.stringify(items));
+        localStorage.setItem("nikko_shopping_list_v10", JSON.stringify(items));
         renderChecklist();
     }
 
@@ -491,7 +492,7 @@
             alert("請先勾選想要刪除的採購項目！");
             return;
         }
-        localStorage.setItem("nikko_shopping_list_v9", JSON.stringify(newItems));
+        localStorage.setItem("nikko_shopping_list_v10", JSON.stringify(newItems));
         renderChecklist();
     }
 
