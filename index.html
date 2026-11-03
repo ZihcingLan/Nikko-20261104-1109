@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 媽媽日光與東京自由彈性賞楓行</title>
+    <style>
+        :root {
+            --primary: #8b4513;
+            --secondary: #d2b48c;
+            --accent: #cd853f;
+            --bg-color: #fdfbf7;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2d9d2;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #5c3a21, #8b4513);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0 0 6px 0;
+            font-size: 1.3rem;
+        }
+        header p {
+            margin: 0;
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+        header a {
+            color: #ffeb3b;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background: #e6dfd5;
+            padding: 6px;
+            gap: 5px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .tab-btn {
+            background: #f4efe6;
+            border: none;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #5c3a21;
+            cursor: pointer;
+            white-space: nowrap;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 15px auto;
+            padding: 0 10px 40px 10px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        h2 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 6px;
+            margin-top: 0;
+        }
+        h3 {
+            font-size: 1rem;
+            color: #5c3a21;
+            margin: 10px 0 6px 0;
+        }
+        .time-badge {
+            display: inline-block;
+            background: #faedcd;
+            color: #856404;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+        .fun-fact {
+            background: #f0f7ed;
+            border-left: 4px solid #3c763d;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            border-radius: 0 6px 6px 0;
+        }
+        a.map-link {
+            color: #1a0dab;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .add-card-box {
+            background: #f5efe6;
+            border: 2px dashed #cd853f;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .add-card-box input, .add-card-box textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.85rem;
+        }
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .batch-delete-bar {
+            margin-top: 15px;
+            text-align: right;
+        }
+        .batch-delete-btn {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .todo-input-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .todo-input-box input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .todo-input-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #faf7f2;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .checklist-item.completed span {
+            text-decoration: line-through;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🍁 2026 媽媽日光與東京自由彈性賞楓行</h1>
+    <p>11/04 (三) ~ 11/09 (一) ｜ 📁 <a href="https://drive.google.com/drive/folders/1MRhGdwO4dzu2HmZj0hRmPUjB2HcjdRuN" target="_blank">點此開啟 Google 雲端共用資料夾</a></p>
+</header>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(event, 'day1')">11/4 Day1</button>
+    <button class="tab-btn" onclick="switchTab(event, 'day2')">11/5 Day2</button>
+    <button class="tab-btn" onclick="switchTab(event, 'day3')">11/6 Day3</button>
+    <button class="tab-btn" onclick="switchTab(event, 'day4')">11/7 Day4</button>
+    <button class="tab-btn" onclick="switchTab(event, 'day5')">11/8 Day5</button>
+    <button class="tab-btn" onclick="switchTab(event, 'day6')">11/9 Day6</button>
+    <button class="tab-btn" onclick="switchTab(event, 'shop')">🛒 採購與清單</button>
+    <button class="tab-btn" onclick="switchTab(event, 'budget')">💰 費用總結</button>
+</div>
+
+<div class="container">
+    <div id="day1" class="tab-content active"></div>
+    <div id="day2" class="tab-content"></div>
+    <div id="day3" class="tab-content"></div>
+    <div id="day4" class="tab-content"></div>
+    <div id="day5" class="tab-content"></div>
+    <div id="day6" class="tab-content"></div>
+
+    <div id="shop" class="tab-content">
+        <div class="card">
+            <h2>🛒 採購與代辦清單管理中心</h2>
+            <p style="font-size: 0.85rem; color: #666;">勾選項目後，點擊下方按鈕即可刪除已勾選項目！</p>
+            <div class="todo-input-box">
+                <input type="text" id="newItemInput" placeholder="例如：買東京香蕉蛋糕、無印良品襪子...">
+                <button onclick="addShoppingItem()">新增</button>
+            </div>
+            <div id="checklistContainer"></div>
+            <div class="batch-delete-bar">
+                <button class="batch-delete-btn" onclick="deleteSelectedShopping()">🗑️ 刪除已勾選項目</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="budget" class="tab-content">
+        <div class="card">
+            <h2>💰 旅遊費用與票券總結</h2>
+            <ul>
+                <li><strong>KKday 4日周遊券</strong>：NT$ 3,124 (雙人)</li>
+                <li><strong>去程特急券 (11/5)</strong>：NT$ 712 (Car 04, 04A/04B)</li>
+                <li><strong>回程特急券 (11/8)</strong>：NT$ 771 (Car 04, 09A/09B)</li>
+                <li><strong>旅遊平安險</strong>：每人 NT$ 761（雙人 NT$ 1,522）</li>
+                <li><strong>行前總計</strong>：<strong>NT$ 54,894</strong>（平均每人 <strong>NT$ 27,447</strong>）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const initialDaysData = {
+        day1: {
+            title: "11/04 (三) 抵達東京 ➔ 淺草入住 ➔ 自由活動",
+            items: [
+                { time: "✈️ 航班", title: "華航 CI0104（12:35 TPE ➔ 16:35 NRT）", desc: "抵達機場後搭乘京成 Access 特快或 Skyliner 直達淺草站。", link: "https://keisei.ekitan.com/naritaacs-i/timetable" },
+                { time: "🛂 申報", title: "Visit Japan Web 入境申報", desc: "請預先完成 VJW 填寫以加速通關。", link: "https://www.vjw.digital.go.jp/main/#/vjwpic026" },
+                { time: "🏨 住宿", title: "東京淺草筑波快速船舶飯店", desc: "Check-in 放行李，稍作休息。", link: "https://maps.google.com/?q=Vessel+Inn+Asakusa+Tsukuba+Express" },
+                { time: "🛒 採購", title: "UNIQLO 淺草 ROX 店", desc: "採購換季與夏季衣服（營業至 21:00）。", link: "https://maps.google.com/?q=UNIQLO+Asakusa+ROX" }
+            ],
+            funFact: "淺草是日本招財貓發源地之一！淺草寺旁的「今戶神社」供奉著一對舉起右手的招財貓夫妻，求姻緣與家庭和睦特別靈驗。"
+        },
+        day2: {
+            title: "11/05 (四) 移往日光 ➔ 中禪寺湖與華嚴瀑布",
+            items: [
+                { time: "11:00", title: "特急 Revaty Kegon 19（淺草 ➔ 東武日光 12:51）", desc: "Car 04, 04A/04B。抵達後步行1分鐘至 Fuggiku 寄放行李。", link: "https://www.google.com/maps/dir/?api=1&origin=Vessel+Inn+Asakusa+Tsukuba+Express&destination=Tobu-Asakusa+Station" },
+                { time: "14:30", title: "中禪寺湖畔散步 & 搭乘遊覽船", desc: "湖上欣賞秋日楓紅美景。", link: "https://www.kkday.com" },
+                { time: "15:30", title: "華嚴瀑布觀景台", desc: "搭乘電梯直達瀑布底端，觀賞 97 公尺壯麗瀑布。", link: "https://maps.google.com/?q=Kegon+Falls" }
+            ],
+            funFact: "中禪寺湖是日本海拔最高的自然湖泊（1,269m）；華嚴瀑布是兩萬年前男體山火山噴發阻塞河道形成的！"
+        },
+        day3: {
+            title: "11/06 (五) 奧日光深度遊（含半月山展望台推薦）",
+            items: [
+                { time: "09:30", title: "湯瀑布 (Yutaki Falls) & 湯之湖", desc: "搭乘東武巴士至「湯瀑布入口」下車，直接欣賞最美瀑布精華。", link: "https://maps.google.com/?q=Yutaki+Falls" },
+                { time: "11:30", title: "龍頭瀑布 (Ryuzu Falls)", desc: "搭巴士至「龍頭瀑布站」下車，觀賞龍頭狀巨石瀑布。", link: "https://maps.google.com/?q=Ryuzu+Falls" },
+                { time: "14:00", title: "中禪寺立木觀音 & 半月山展望台（彈性熱門點）", desc: "於中禪寺前搭半月山線巴士至終點站，步行20分鐘登頂俯瞰中禪寺湖全景！", link: "https://maps.google.com/?q=Hangetsuyama+Observation+Deck" },
+                { time: "16:00", title: "日光神橋 & 老街散步", desc: "返回市區品嚐日光布丁與老街伴手禮。", link: "https://maps.google.com/?q=Shinkyo+Bridge" }
+            ],
+            funFact: "半月山展望台是俯瞰中禪寺湖、男體山與華嚴瀑布源頭的最佳高點，視野比纜車更開闊！"
+        },
+        day4: {
+            title: "11/07 (六) 世界遺產巡禮 ➔ 🌙 輪王寺夜間點燈",
+            items: [
+                { time: "09:00", title: "日光東照宮 & 二荒山神社", desc: "參觀三不猴、眠貓與陽明門逆柱。建議先買免排隊電子票。", link: "https://www.klook.com/zh-TW/activity/144422-nikko-toshogu-shrine-admission-ticket/" },
+                { time: "12:00", title: "老街午餐（炸湯波饅頭 さかえや）", desc: "品嚐在地名物豆皮點心。", link: "https://maps.google.com/?q=Sakaeya+Nikko" },
+                { time: "17:30", title: "🌙 重頭戲：日光山輪王寺 逍遙園夜間點燈", desc: "參觀秋季限定夜楓點燈 (Light Up)，欣賞夜間朱紅社殿美景。", link: "https://maps.google.com/?q=Rinnoji+Shoyoen" }
+            ],
+            funFact: "東照宮陽明門的「逆柱」故意將圖案刻倒，象徵「未完成」以避免「滿極則虧」的衰敗意涵。"
+        },
+        day5: {
+            title: "11/08 (日) 日光採買 ➔ 返回東京淺草",
+            items: [
+                { time: "10:00", title: "日光老街最後伴手禮採買", desc: "採買嚴昆布與堀西萬能調味粉。", link: "https://maps.google.com/?q=Nikko+Main+Street+Matsubaracho" },
+                { time: "14:30", title: "返回 Fuggiku 飯店取行李", desc: "飯店就在車站對面，時間充裕。", link: "https://maps.app.goo.gl/a2bjpDtF3zn8nRm26?g_st=ic" },
+                { time: "15:53", title: "特急 Kegon 64（東武日光 ➔ 淺草 17:45）", desc: "Car 04, 09A/09B。返抵淺草入住飯店。", link: "https://maps.google.com/?q=Vessel+Inn+Asakusa+Tsukuba+Express" }
+            ],
+            funFact: "神橋被譽為日本三大奇橋之一，傳說聖僧勝道上人當年遇到大河阻擋，神靈化為兩條巨蛇交織成橋讓他渡河。"
+        },
+        day6: {
+            title: "11/09 (一) 東京市區血拼 ➔ 前往機場返台",
+            items: [
+                { time: "10:00", title: "ete 大丸東京店採購", desc: "東京車站旁大丸百貨 3F 挑選飾品，並採購 MUJI 牙刷架。", link: "https://maps.google.com/?q=ete+Daimaru+Tokyo" },
+                { time: "14:00", title: "搭乘京成 Access 特快直達成田機場", desc: "淺草站直通運轉約 50-55 分鐘直達機場，免換車！", link: "https://keisei.ekitan.com/naritaacs-i/timetable" },
+                { time: "17:45", title: "華航 CI0105 返台（17:45 NRT ➔ 20:55 TPE）", desc: "結束愉快充實的日光賞楓之旅。", link: "" }
+            ],
+            funFact: "大丸東京店連接東京車站八重洲口，地下街的「東京拉麵街」集結了多家日本頂級拉麵名店！"
+        }
+    };
+
+    function getDaysData() {
+        let stored = localStorage.getItem("nikko_days_plan_v5");
+        if (stored) { try { return JSON.parse(stored); } catch(e) {} }
+        return initialDaysData;
+    }
+
+    function saveDaysData(data) {
+        localStorage.setItem("nikko_days_plan_v5", JSON.stringify(data));
+    }
+
+    function renderDays() {
+        let daysData = getDaysData();
+        for (let dayKey in daysData) {
+            let dayObj = daysData[dayKey];
+            let container = document.getElementById(dayKey);
+            if (!container) continue;
+
+            let html = `<div class="card">
+                <h2>${dayObj.title}</h2>`;
+
+            dayObj.items.forEach((item, idx) => {
+                html += `
+                    <div class="card" style="background:#fffaf3; margin-top:10px;">
+                        <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+                            <input type="checkbox" id="chk_${dayKey}_${idx}" style="margin-top:4px;">
+                            <div style="flex:1;">
+                                ${item.time ? `<span class="time-badge">${item.time}</span>` : ''}
+                                <strong>${item.title}</strong>
+                                ${item.desc ? `<p style="font-size:0.85rem; margin:5px 0;">${item.desc}</p>` : ''}
+                                ${item.link ? `<a class="map-link" href="${item.link}" target="_blank">🔗 點此開啟連結/申報網址</a>` : ''}
+                            </div>
+                        </label>
+                    </div>
+                `;
+            });
+
+            if (dayObj.items.length > 0) {
+                html += `
+                    <div class="batch-delete-bar">
+                        <button class="batch-delete-btn" onclick="deleteSelectedCards('${dayKey}')">🗑️ 刪除已勾選行程</button>
+                    </div>
+                `;
+            }
+
+            if (dayObj.funFact) {
+                html += `<div class="fun-fact">💡 <strong>景點冷知識 Fun Fact：</strong><br>${dayObj.funFact}</div>`;
+            }
+
+            html += `
+                <div class="add-card-box">
+                    <h3>➕ 在此日新增自訂行程項目</h3>
+                    <input type="text" id="input_time_${dayKey}" placeholder="時間（選填，如：14:30）">
+                    <input type="text" id="input_title_${dayKey}" placeholder="景點/行程名稱（必填）">
+                    <textarea id="input_desc_${dayKey}" placeholder="備註或交通說明（選填）"></textarea>
+                    <input type="text" id="input_link_${dayKey}" placeholder="Google Maps 或購票網址（選填）">
+                    <button class="add-btn" onclick="addCardItem('${dayKey}')">新增行程</button>
+                </div>
+            </div>`;
+
+            container.innerHTML = html;
+        }
+    }
+
+    function addCardItem(dayKey) {
+        let timeVal = document.getElementById(`input_time_${dayKey}`).value.trim();
+        let titleVal = document.getElementById(`input_title_${dayKey}`).value.trim();
+        let descVal = document.getElementById(`input_desc_${dayKey}`).value.trim();
+        let linkVal = document.getElementById(`input_link_${dayKey}`).value.trim();
+
+        if (!titleVal) {
+            alert("請輸入行程或景點名稱！");
+            return;
+        }
+
+        let daysData = getDaysData();
+        daysData[dayKey].items.push({ time: timeVal, title: titleVal, desc: descVal, link: linkVal });
+        saveDaysData(daysData);
+        renderDays();
+    }
+
+    function deleteSelectedCards(dayKey) {
+        let daysData = getDaysData();
+        let newItems = [];
+        daysData[dayKey].items.forEach((item, idx) => {
+            let chk = document.getElementById(`chk_${dayKey}_${idx}`);
+            if (!chk || !chk.checked) {
+                newItems.push(item);
+            }
+        });
+        if (newItems.length === daysData[dayKey].items.length) {
+            alert("請先勾選想要刪除的行程項目！");
+            return;
+        }
+        daysData[dayKey].items = newItems;
+        saveDaysData(daysData);
+        renderDays();
+    }
+
+    function switchTab(evt, tabName) {
+        let contents = document.getElementsByClassName("tab-content");
+        for (let c of contents) { c.classList.remove("active"); }
+        let btns = document.getElementsByClassName("tab-btn");
+        for (let b of btns) { b.classList.remove("active"); }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    let defaultShopping = [
+        { text: "UNIQLO / GU 服飾 (Day 1 淺草 ROX)", completed: false },
+        { text: "ete 飾品 (Day 6 大丸東京店)", completed: false },
+        { text: "堀西萬能調味粉 (ほりにし)", completed: false },
+        { text: "嚴昆布 (日光老街)", completed: false },
+        { text: "MUJI 牙刷小架子", completed: false }
+    ];
+
+    function getShoppingItems() {
+        let stored = localStorage.getItem("nikko_shopping_list_v5");
+        if (stored) { try { return JSON.parse(stored); } catch(e) {} }
+        return defaultShopping;
+    }
+
+    function renderChecklist() {
+        let items = getShoppingItems();
+        let container = document.getElementById("checklistContainer");
+        container.innerHTML = "";
+        items.forEach((item, index) => {
+            let div = document.createElement("div");
+            div.className = "checklist-item" + (item.completed ? " completed" : "");
+            div.innerHTML = `
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;">
+                    <input type="checkbox" id="shop_chk_${index}" ${item.completed ? 'checked' : ''} onchange="toggleShopping(${index})">
+                    <span>${item.text}</span>
+                </label>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function addShoppingItem() {
+        let input = document.getElementById("newItemInput");
+        let val = input.value.trim();
+        if(!val) return;
+        let items = getShoppingItems();
+        items.push({ text: val, completed: false });
+        localStorage.setItem("nikko_shopping_list_v5", JSON.stringify(items));
+        input.value = "";
+        renderChecklist();
+    }
+
+    function toggleShopping(index) {
+        let items = getShoppingItems();
+        items[index].completed = !items[index].completed;
+        localStorage.setItem("nikko_shopping_list_v5", JSON.stringify(items));
+        renderChecklist();
+    }
+
+    function deleteSelectedShopping() {
+        let items = getShoppingItems();
+        let newItems = items.filter((item, idx) => {
+            let chk = document.getElementById(`shop_chk_${idx}`);
+            return !chk || !chk.checked;
+        });
+        if (newItems.length === items.length) {
+            alert("請先勾選想要刪除的採購項目！");
+            return;
+        }
+        localStorage.setItem("nikko_shopping_list_v5", JSON.stringify(newItems));
+        renderChecklist();
+    }
+
+    window.onload = function() {
+        renderDays();
+        renderChecklist();
+    };
+</script>
+
+</body>
+</html>
